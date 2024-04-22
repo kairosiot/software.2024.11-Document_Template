@@ -1,3 +1,5 @@
+Taken From https://github.com/flavio20002/typst-orange-template/
+
 A Typst implementation of https://www.latextemplates.com/template/legrand-orange-book
 See the example pdf in the Release section of this project
 
