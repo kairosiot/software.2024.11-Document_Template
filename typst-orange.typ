@@ -51,7 +51,7 @@
 }
 
 #let part(title) = {
-  pagebreak(to: "odd")
+  pagebreak()
   part_change.update(x =>
     true
   )
@@ -91,7 +91,7 @@
 }
 
 #let chapter(title, image:none, l: none) = {
-  pagebreak(to: "odd")
+  pagebreak()
   heading_image.update(x =>
     image
   )
@@ -135,7 +135,7 @@
 }
 
 #let my-bibliography(file, image:none) = {
-  pagebreak_until_odd()
+  pagebreak()
   counter(heading).update(0)
   heading_image.update(x =>
     image
@@ -210,7 +210,7 @@
   show terms: set par(first-line-indent: 0em)
 
   set page(
-    paper: "a4",
+    paper: "us-letter",
     margin: (x: 3cm, bottom: 2.5cm, top: 3cm),
      header: locate(loc => {
       set text(size: title5)

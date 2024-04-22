@@ -55,7 +55,8 @@
        my-outline-row(textWeight: "regular", textSize: textSize4, textColor:black, number: number, title: title, heading_page: heading_page, location: it.element.location())
     }
   }
-  pagebreak(to: "odd")
+  pagebreak()
+
   outline(depth: 3, indent: false)
 }
 
@@ -98,7 +99,7 @@
       #link(it.element.location(),heading_page)
     ]
   }
-  pagebreak(to: "odd")
+  pagebreak()
   outline(
     title: listOfFigureTitle,
     target: target,
