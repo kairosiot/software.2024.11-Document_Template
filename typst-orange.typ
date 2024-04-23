@@ -228,7 +228,7 @@
         return
       }
       let appendix = appendix_state.at(loc)      
-      if odd_page {
+      if false and odd_page {
         let before = query(selector(heading.where(level: 2)).before(loc), loc)
         let counterInt = counter(heading).at(loc)
         if before != () and counterInt.len()> 2 {
@@ -284,9 +284,9 @@
       locate(loc => {
         let img = heading_image.at(loc)
         if img != none {
-          set image(width: 21cm, height: 9.4cm)
-          place(move(dx: -3cm, dy: -3cm, img))
-          place( move(dx: -3cm, dy: -3cm, block(width: 21cm, height: 9.4cm, align(right + bottom, pad(bottom: 1.2cm, block(
+          set image(width: 8.5in, height: 4.7cm)
+          place(move(dx: -3cm, dy: -3.1cm, img))
+          place( move(dx: -3cm, dy: -6.3cm, block(width: 8.5in, height: 8.4cm, align(right + bottom, pad(bottom: 1.2cm, block(
             width: 86%,
             stroke: (
                 right: none,
@@ -300,7 +300,7 @@
             ),
             align(left, text(size: title1, it))
           ))))))
-          v(8.4cm)
+          v(3.4cm)
       }
       else{
         move(dx: 3cm, dy: -0.5cm, align(right + top, block(
@@ -375,16 +375,7 @@
       #text(size: title_main_3, weight: "bold", author)
     ]))
   ]
-  if (copyright!=none){
-    set text(size: 10pt)
-    show link: it => [
-      #set text(fill: mainColor)
-      #it
-    ]
-    show par: set block(spacing: 2em)
-    pagebreak()
-    align(bottom, copyright)
-  }
+  
   
   heading_image.update(x =>
     imageIndex
@@ -406,6 +397,18 @@
   show link: set text(fill: mainColor)
 
   body
+
+  if (copyright!=none){
+    set text(size: 10pt)
+    show link: it => [
+      #set text(fill: mainColor)
+      #it
+    ]
+    show par: set block(spacing: 2em)
+    pagebreak()
+	text("Document Revision Information:")
+    align(bottom, copyright)
+  }
 
 }
 
