@@ -8,6 +8,8 @@
   h(0.1em)
 }
 
+
+
 #let normalText = 1em
 #let largeText = 3em
 #let hugeText = 16em
@@ -15,15 +17,16 @@
 #let title_main_2 = 1.8em
 #let title_main_3 = 2.2em
 #let title1 = 2.2em
-#let title2 = 1.5em
-#let title3 = 1.3em
-#let title4 = 1.2em
+#let title2 = 1.3em
+#let title3 = 1.2em
+#let title4 = 1.1em
 #let title5 = 1.1em
 
 #let outlinePart = 1.5em;
 #let outlineHeading1 = 1.3em;
 #let outlineHeading2 = 1.1em;
 #let outlineHeading3 = 1.1em;
+#let outlineHeading4 = 0.9em;
 
 
 #let nocite(citation) = {
@@ -56,8 +59,9 @@
     true
   )
   part_state.update(x =>
-    title
+	title
   )
+  
   part_counter.step()
   [
     #locate(loc => [
@@ -72,19 +76,19 @@
       #let supplement_part = supplement_part_state.at(loc)
       #if part_style == 0 [
         #set par(justify: false)
-        #place(block(width:100%, height:100%, outset: (x: 3cm, bottom: 2.5cm, top: 3cm), fill: mainColor.lighten(70%)))
-        #place(top+right, text(fill: black, size: largeText, weight: "bold", box(width: 60%, part_state.display())))
+        #place(block(width:100%, height:100%, outset: (x: 3cm, bottom: 2.5cm, top: 3cm), fill: mainColor.lighten(65%)))
+        #place(top+right, text(fill: black, size: largeText, weight: "bold", box(width: 60%, heading(level: 1, title))))
         #place(top+left, text(fill: mainColor, size: hugeText, weight: "bold", part_counter.display("I")))
       ] else if part_style == 1 [
         #set par(justify: false)
-        #place(block(width:100%, height:100%, outset: (x: 3cm, bottom: 2.5cm, top: 3cm), fill: mainColor.lighten(70%)))
+        #place(block(width:100%, height:100%, outset: (x: 3cm, bottom: 2.5cm, top: 3cm), fill: mainColor.lighten(65%)))
         #place(top+left)[
-          #block(text(fill: black, size: 2.5em, weight: "bold", supplement_part + " " + part_counter.display("I")))
+          #block(text(fill: black, size: 2.5em, weight: "bold", supplement_part + " " + part_counter.display()))
           #v(1cm, weak: true)
-          #move(dx: -4pt, block(text(fill: mainColor, size: 6em, weight: "bold", part_state.display())))
+          #move(dx: -4pt, block(text(fill: mainColor, size: 3em, weight: "bold", box(width: 100%,heading(level: 1, title)))))
         ]
       ]
-            #align(bottom+right, my-outline-small(title, appendix_state, part_state, part_location,part_change,part_counter, mainColor, textSize1: outlinePart, textSize2: outlineHeading1, textSize3: outlineHeading2, textSize4: outlineHeading3))
+            #align(bottom+right, my-outline-small(title, appendix_state, part_state, part_location,part_change,part_counter, mainColor, textSize1: outlinePart, textSize2: outlineHeading1, textSize3: outlineHeading2, textSize4: outlineHeading3, textSize5: outlineHeading4))
     ])
       
   ]
@@ -96,9 +100,10 @@
     image
   )
   if l != none [
-    #heading(level: 1, title) #label(l)
+    #heading(level: 2, title) #label(l)
+
   ] else [
-    #heading(level: 1, title) 
+    #heading(level: 2, title) 
   ]
   part_change.update(x =>
     false
@@ -141,6 +146,60 @@
     image
   )
   file
+}
+
+#let purpose(name: none, body) = {
+  locate(loc => {
+    let language = language_state.at(loc)
+    let mainColor = main_color_state.at(loc)
+    thmbox("purpose", "Purpose",
+	disable_numbering: true,
+    stroke: 0.5pt + mainColor,
+    radius: 0em,
+    inset: 0.65em,
+    padding: (top: 0em, bottom: 0em),
+    namefmt: x => [*--- #x.*],
+    separator: h(0.2em),
+    titlefmt: x => text(weight: "bold", fill: mainColor, x), 
+    fill: black.lighten(95%), 
+    base_level: 1)(name:name, body)
+  })
+}
+
+#let remark(name: none, body) = {
+  locate(loc => {
+    let language = language_state.at(loc)
+    let mainColor = main_color_state.at(loc)
+    thmbox("remark", "Remark",
+	disable_numbering: true,
+    stroke: 0.5pt + mainColor,
+    radius: 0em,
+    inset: 0.65em,
+    padding: (top: 0em, bottom: 0em),
+    namefmt: x => [*--- #x.*],
+    separator: h(0.2em),
+    titlefmt: x => text(weight: "bold", fill: mainColor, x), 
+    fill: black.lighten(95%), 
+    base_level: 1)(name:name, body)
+  })
+}
+
+#let note(name: none, body) = {
+  locate(loc => {
+    let language = language_state.at(loc)
+    let mainColor = main_color_state.at(loc)
+    thmbox("note", "Note",
+	disable_numbering: true,
+    stroke: 0.5pt + mainColor,
+    radius: 0em,
+    inset: 0.65em,
+    padding: (top: 0em, bottom: 0em),
+    namefmt: x => [*--- #x.*],
+    separator: h(0.2em),
+    titlefmt: x => text(weight: "bold", fill: mainColor, x), 
+    fill: black.lighten(95%), 
+    base_level: 1)(name:name, body)
+  })
 }
 
 #let theorem(name: none, body) = {
@@ -259,24 +318,38 @@
 
   set heading(
     numbering: (..nums) => {
+	  
       let vals = nums.pos()
+
       if vals.len() == 1 {
-        return str(vals.first()) + "."
-      }
-      else if vals.len() <=4 {
+		return none
+	  }
+
+      if vals.len() < 3 {
+		return nums.pos().map(str).join(".")
+	  }
+
+	  if vals.len() <=4 {
         let color = mainColor
         if vals.len() == 4 {
           color = black
         }
-        return place(dx:-4.5cm, box(width: 4cm, align(right, text(fill: color)[#nums.pos().map(str).join(".")])))
+        return nums.pos().map(str).join(".")		
+        //return place(dx:-4.5cm, box(width: 4cm, align(right, text(fill: color)[#nums.pos().map(str).join(".")])))
       }
     },
     supplement: supplementChapter
   );
 
   show heading: it => {
-    set text(size: fontSize)
-    if it.level == 1 {
+	if it.level == 1 {
+		it
+		return
+	}
+
+	set text(size: fontSize)
+    if it.level == 2 {
+
       //set par(justify: false)
       counter(figure.where(kind: image)).update(0)
       counter(figure.where(kind: table)).update(0)
@@ -321,7 +394,7 @@
       }
       })
     }
-    else if it.level == 2 or it.level == 3 or it.level == 4 {
+    else if it.level == 4 or it.level == 4 or it.level == 4 {
       let size
       let space
       let color = mainColor
@@ -365,7 +438,7 @@
         set image(width: 3cm)
         place(top + center, pad(top:1cm, logo))
     }
-    #align(center + horizon, block(width: 100%, fill: mainColor.lighten(70%), height: 7.5cm, pad(x:2cm, y:1cm)[
+    #align(center + horizon, block(width: 100%, fill: mainColor.lighten(65%), height: 7.5cm, pad(x:2cm, y:1cm)[
       #par(leading: 0.4em)[
         #text(size: title_main_1, weight: "black", title)
       ]
@@ -381,11 +454,11 @@
     imageIndex
   )
 
-  my-outline(appendix_state, part_state, part_location,part_change,part_counter, mainColor, textSize1: outlinePart, textSize2: outlineHeading1, textSize3: outlineHeading2, textSize4: outlineHeading3)
+  my-outline(appendix_state, part_state, part_location,part_change,part_counter, mainColor, textSize1: outlinePart, textSize2: outlineHeading1, textSize3: outlineHeading2, textSize4: outlineHeading3, img:imageIndex)
 
-  my-outline-sec(listOfFigureTitle, figure.where(kind: image), outlineHeading3)
+  my-outline-sec(listOfFigureTitle, figure.where(kind: image), outlineHeading3, img:imageIndex)
 
-  my-outline-sec(listOfTableTitle, figure.where(kind: table), outlineHeading3)
+  my-outline-sec(listOfTableTitle, figure.where(kind: table), outlineHeading3, img:imageIndex)
 
 
   // Main body.
@@ -406,7 +479,7 @@
     ]
     show par: set block(spacing: 2em)
     pagebreak()
-	text("Document Revision Information:")
+	strong(text("Document Revision Information:"))
     align(bottom, copyright)
   }
 

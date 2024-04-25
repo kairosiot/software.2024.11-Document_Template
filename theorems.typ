@@ -112,6 +112,7 @@
   inset: 1.2em,
   radius: 0.3em,
   breakable: false,
+  disable_numbering: false,
   padding: (top: 0.5em, bottom: 0.5em),
   namefmt: x => [(#x)],
   titlefmt: strong,
@@ -127,7 +128,7 @@
       name = []
     }
     let title = head
-    if not number == none {
+    if not number == none and not disable_numbering{
       title += " " + number
     }
     title = titlefmt(title)

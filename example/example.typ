@@ -230,7 +230,9 @@ Referencing @table in-text using its label.
 #index("Figure")
 
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent porttitor arcu luctus, imperdiet
-urna iaculis, mattis eros. Pellentesque iaculis odio vel nisl ullamcorper, nec faucibus ipsum molestie.
+urna iaculis, mattis eros. Pellentesque iacu#theorem()[
+  A set $mathcal(D)(G)$  in dense in $L^2(G)$, $|dot|_0$.
+]lis odio vel nisl ullamcorper, nec faucibus ipsum molestie.
 Sed dictum nisl non aliquet porttitor. Etiam vulputate arcu dignissim, finibus sem et, viverra nisl.
 Aenean luctus congue massa, ut laoreet metus ornare in. Nunc fermentum nisi imperdiet lectus
 tincidunt vestibulum at ac elit. Nulla mattis nisl eu malesuada suscipit.
